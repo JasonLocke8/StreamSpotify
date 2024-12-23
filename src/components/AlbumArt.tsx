@@ -12,7 +12,7 @@ export const AlbumArt = ({ albumArt, albumName, isPlaying }: AlbumArtProps) => (
     <img 
       src={albumArt} 
       alt={`${albumName} cover`}
-      className="w-full h-[300px] object-cover rounded-lg shadow-lg"
+      className="w-full h-[350px] object-cover rounded-lg shadow-lg"
     />
     {!isPlaying && (
       <div className="absolute inset-0 bg-black/40 opacity-100 transition-opacity duration-300 rounded-lg flex items-center justify-center">
