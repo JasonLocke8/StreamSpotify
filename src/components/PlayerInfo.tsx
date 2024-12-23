@@ -11,20 +11,42 @@ interface PlayerInfoProps {
 
 export const PlayerInfo = ({ song, artist, progress, duration }: PlayerInfoProps) => {
   const [isMarquee, setIsMarquee] = useState(false);
+  const [isArtistMarquee, setIsArtistMarquee] = useState(false);
 
   const songRef = useRef<HTMLHeadingElement>(null);
+  const artistRef = useRef<HTMLParagraphElement>(null);
 
   useLayoutEffect(() => {
     const handleResize = () => {
-      if (songRef.current) {
+      if (songRef.current && artistRef.current) {
+        const songContainerDiv = songRef.current.parentElement;
+        const songContainerWidth = songContainerDiv ? songContainerDiv.clientWidth : 0;
         const songWidth = songRef.current.scrollWidth;
-        console.log(songWidth);
-        const containerWidth = songRef.current.clientWidth;
-        console.log(containerWidth);
-        if (songWidth >= containerWidth) {
+
+        const artistContainerDiv = artistRef.current.parentElement;
+        const artistContainerWidth = artistContainerDiv ? artistContainerDiv.clientWidth : 0;
+        const artistWidth = artistRef.current.scrollWidth;
+
+        console.log("------------------");
+        console.log("songContainerWidth: "+songContainerWidth);
+        console.log("songWidth: "+songWidth);
+        console.log("------------------");
+
+        console.log("------------------");
+        console.log("artistContainerWidth: "+artistContainerWidth);
+        console.log("artistWidth: "+artistWidth);
+        console.log("------------------");
+
+        if (songWidth > songContainerWidth) {
           setIsMarquee(true);
         } else {
           setIsMarquee(false);
+        }
+
+        if (artistWidth > artistContainerWidth) {
+          setIsArtistMarquee(true);
+        } else {
+          setIsArtistMarquee(false);
         }
       }
     };
@@ -42,8 +64,9 @@ export const PlayerInfo = ({ song, artist, progress, duration }: PlayerInfoProps
   return (
     <div className="mt-4">
       <div className="flex items-center justify-between">
-        <div className="flex-1 text-center mx-auto" style={{ maxWidth: '80%' }}>
-          <div className="relative overflow-hidden" style={{ width: '80%', margin: '0 auto', height: '2.5rem' }}>
+        <div className="flex-1 text-center mx-auto" style={{ maxWidth: '80%', height: '55px' }}>
+          
+          <div className="relative overflow-hidden" style={{ width: '80%', margin: '0 auto' }}>
             <h2
               ref={songRef}
               className={`text-xl font-bold text-white ${isMarquee ? 'marquee' : ''}`}
@@ -52,7 +75,15 @@ export const PlayerInfo = ({ song, artist, progress, duration }: PlayerInfoProps
               {song}
             </h2>
           </div>
-          <p className="text-gray-400 truncate mx-auto" style={{ maxWidth: '80%' }}>{artist}</p>
+
+          <div className="relative overflow-hidden" style={{ width: '80%', margin: '0 auto' }}>
+            <div className={`text-gray-400 truncate mx-auto ${isArtistMarquee ? 'marquee' : ''}`} style={{ textAlign: 'center' }}>
+              <h3 ref={artistRef}>
+                {artist}
+              </h3>
+            </div>
+          </div>
+          
         </div>
         <Music2 className="w-6 h-6 text-green-500" />
       </div>
