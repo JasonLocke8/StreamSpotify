@@ -1,0 +1,48 @@
+import { config } from '../config';
+
+const { SPOTIFY_CLIENT_ID, REDIRECT_URI } = config;
+const AUTH_ENDPOINT = "https://accounts.spotify.com/authorize";
+const RESPONSE_TYPE = "token";
+const SCOPE = "user-read-currently-playing user-read-playback-state";
+
+export const loginUrl = `${AUTH_ENDPOINT}?client_id=${SPOTIFY_CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=${RESPONSE_TYPE}&scope=${SCOPE}`;
+
+export const getCurrentTrack = async (token: string) => {
+  const response = await fetch('https://api.spotify.com/v1/me/player/currently-playing', {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  if (response.status === 204 || response.status > 400) {
+    return null;
+  }
+
+  const data = await response.json();
+  return {
+    song: data.item.name,
+    artist: data.item.artists.map((artist: any) => artist.name).join(', '),
+    albumArt: data.item.album.images[0].url,
+    album: data.item.album.name,
+    duration_ms: data.item.duration_ms,
+    isPlaying: data.is_playing,
+  };
+};
+
+export const getPlaybackState = async (token: string) => {
+  const response = await fetch('https://api.spotify.com/v1/me/player', {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  if (response.status === 204 || response.status > 400) {
+    return null;
+  }
+
+  const data = await response.json();
+  return {
+    progress_ms: data.progress_ms,
+    isPlaying: data.is_playing,
+  };
+};

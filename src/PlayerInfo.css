@@ -1,0 +1,55 @@
+.player-info {
+  margin-top: 1rem;
+}
+
+.player-info .header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.player-info .header .text-center {
+  flex: 1;
+  text-align: center;
+}
+
+.player-info .header h2 {
+  font-size: 1.25rem;
+  font-weight: bold;
+  color: white;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.player-info .header p {
+  color: #9ca3af; /* gray-400 */
+}
+
+.player-info .progress-bar {
+  margin-top: 1rem;
+}
+
+.player-info .progress-bar .background {
+  width: 100%;
+  height: 0.25rem;
+  background-color: #374151; /* gray-700 */
+  border-radius: 9999px;
+}
+
+.player-info .progress-bar .foreground {
+  height: 100%;
+  background-color: #10b981; /* green-500 */
+  border-radius: 9999px;
+}
+
+.marquee {
+  display: inline-block;
+  white-space: nowrap;
+  animation: marquee 10s linear infinite;
+}
+
+@keyframes marquee {
+  0% { transform: translateX(100%); }
+  100% { transform: translateX(-100%); }
+}
