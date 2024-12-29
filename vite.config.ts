@@ -13,10 +13,18 @@ export default defineConfig({
   server: {
     proxy: {
       '/callback': {
-        target: 'http://localhost:3000',
+        target: 'https://jasonlocke8.github.io/StreamSpotify/callback',
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/callback/, '')
       }
     }
-  }
+  },
+  build: {
+    outDir: 'dist',
+    rollupOptions: {
+      output: {
+        manualChunks: undefined,
+      },
+    },
+  },
 });
