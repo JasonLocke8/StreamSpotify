@@ -19,35 +19,13 @@ export const PlayerInfo = ({ song, artist, progress, duration }: PlayerInfoProps
   useLayoutEffect(() => {
     const handleResize = () => {
       if (songRef.current && artistRef.current) {
-        const songContainerDiv = songRef.current.parentElement;
-        const songContainerWidth = songContainerDiv ? songContainerDiv.clientWidth : 0;
         const songWidth = songRef.current.scrollWidth;
-
-        const artistContainerDiv = artistRef.current.parentElement;
-        const artistContainerWidth = artistContainerDiv ? artistContainerDiv.clientWidth : 0;
+        const songContainerWidth = songRef.current.parentElement?.clientWidth || 0;
         const artistWidth = artistRef.current.scrollWidth;
+        const artistContainerWidth = artistRef.current.parentElement?.clientWidth || 0;
 
-        console.log("------------------");
-        console.log("songContainerWidth: "+songContainerWidth);
-        console.log("songWidth: "+songWidth);
-        console.log("------------------");
-
-        console.log("------------------");
-        console.log("artistContainerWidth: "+artistContainerWidth);
-        console.log("artistWidth: "+artistWidth);
-        console.log("------------------");
-
-        if (songWidth > songContainerWidth) {
-          setIsMarquee(true);
-        } else {
-          setIsMarquee(false);
-        }
-
-        if (artistWidth > artistContainerWidth) {
-          setIsArtistMarquee(true);
-        } else {
-          setIsArtistMarquee(false);
-        }
+        setIsMarquee(songWidth > songContainerWidth);
+        setIsArtistMarquee(artistWidth > artistContainerWidth);
       }
     };
 
