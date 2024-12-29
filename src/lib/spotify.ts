@@ -7,6 +7,10 @@ const SCOPE = "user-read-currently-playing user-read-playback-state";
 
 export const loginUrl = `${AUTH_ENDPOINT}?client_id=${SPOTIFY_CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=${RESPONSE_TYPE}&scope=${SCOPE}`;
 
+export const getSpotifyToken = (token: string) => {
+  localStorage.setItem('spotify_token', token);
+};
+
 export const getCurrentTrack = async (token: string) => {
   const response = await fetch('https://api.spotify.com/v1/me/player/currently-playing', {
     headers: {

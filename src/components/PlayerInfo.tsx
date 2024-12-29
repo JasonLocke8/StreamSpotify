@@ -1,5 +1,7 @@
-import React, { useRef, useLayoutEffect, useState } from 'react';
+import React, { useRef, useLayoutEffect, useState, useEffect } from 'react';
 import { Music2 } from 'lucide-react';
+import { useLocation } from 'react-router-dom';
+import { getSpotifyToken } from '../lib/spotify';
 import '../PlayerInfo.css';
 
 interface PlayerInfoProps {
@@ -15,6 +17,7 @@ export const PlayerInfo = ({ song, artist, progress, duration }: PlayerInfoProps
 
   const songRef = useRef<HTMLHeadingElement>(null);
   const artistRef = useRef<HTMLParagraphElement>(null);
+  const location = useLocation();
 
   useLayoutEffect(() => {
     const handleResize = () => {
@@ -36,6 +39,16 @@ export const PlayerInfo = ({ song, artist, progress, duration }: PlayerInfoProps
       window.removeEventListener('resize', handleResize);
     };
   }, [song, artist, duration]);
+
+  useEffect(() => {
+    const hash = location.hash;
+    if (hash) {
+      const token = new URLSearchParams(hash.replace('#', '')).get('access_token');
+      if (token) {
+        getSpotifyToken(token);
+      }
+    }
+  }, [location]);
 
   const progressPercentage = (progress / duration) * 100;
 
@@ -77,3 +90,5 @@ export const PlayerInfo = ({ song, artist, progress, duration }: PlayerInfoProps
     </div>
   );
 };
+
+export default PlayerInfo;

@@ -9,5 +9,14 @@ export default defineConfig({
   },
   define: {
     'process.env': {}
+  },
+  server: {
+    proxy: {
+      '/callback': {
+        target: 'http://localhost:3000',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/callback/, '')
+      }
+    }
   }
 });
