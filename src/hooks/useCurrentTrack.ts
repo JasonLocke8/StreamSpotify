@@ -4,7 +4,7 @@ import type { SpotifyTrack } from '../types/spotify';
 
 export function useCurrentTrack(token: string) {
   const [track, setTrack] = useState<SpotifyTrack | null>(null);
-  const [playbackState, setPlaybackState] = useState<{ progress_ms: any; isPlaying: any } | null>(null);
+  const [playbackState, setPlaybackState] = useState<{ progress_ms: number; isPlaying: boolean } | null>(null);
 
   useEffect(() => {
     if (!token) return;
