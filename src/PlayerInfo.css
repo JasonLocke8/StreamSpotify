@@ -47,7 +47,7 @@
   display: inline-block;
   white-space: nowrap;
   animation: marquee 10s linear infinite;
-  vertical-align: middle; /* Ensure it does not affect the height */
+  vertical-align: middle;
 }
 
 @keyframes marquee {
